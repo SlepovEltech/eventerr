@@ -1,9 +1,6 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -14,7 +11,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User author;
+
     private String name;
     private Date date;
     private String description;
@@ -23,7 +23,8 @@ public class Event {
 
     }
 
-    public Event(String name, Date date, String description) {
+    public Event(User author, String name, Date date, String description) {
+        this.author = author;
         this.name = name;
         this.date = date;
         this.description = description;
@@ -68,5 +69,9 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAuthorName(){
+        return (author != null) ? author.getUsername() : "<none>";
     }
 }

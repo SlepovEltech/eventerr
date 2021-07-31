@@ -12,7 +12,6 @@
         </form>
     </div>
     <form action="/main" method="post" >
-        <input type="number" name="owner_id" placeholder="Введите ID организатора"/>
         <input type="text" name="name" placeholder="Введите название мероприятия"/>
         <input type="date" name="date" placeholder="Введите дату"/>
         <input type="text" name="description" placeholder="Введите описание"/>
@@ -25,10 +24,10 @@
     {{#events}}
         <tr>
             <td>{{id}}</td>
-            <td>{{owner_id}}</td>
             <td>{{name}}</td>
             <td>{{date}}</td>
             <td>{{description}}</td>
+            <td><strong> {{authorName}} </strong></td>
         </tr>
     {{/events}}
     </table>
