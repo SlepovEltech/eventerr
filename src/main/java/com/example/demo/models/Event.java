@@ -19,6 +19,8 @@ public class Event {
     private Date date;
     private String description;
 
+    private String filename;
+
     public Event(){
 
     }
@@ -73,5 +75,13 @@ public class Event {
 
     public String getAuthorName(){
         return (author != null) ? author.getUsername() : "<none>";
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
