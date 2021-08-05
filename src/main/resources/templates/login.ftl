@@ -2,7 +2,7 @@
 <#import "parts/login.ftl" as l>
 
 <@c.page>
-    <h1>Login page</h1>
-    <@l.login "/login" "Sign In"/>
-    <a href="/signup">Add new user</a>
+    <h1>Авторизация</h1>
+    <@l.login "/login" "Войти"/>
+    <a href="/signup" class="link-secondary">Создать новый аккаунт</a>
 </@c.page>

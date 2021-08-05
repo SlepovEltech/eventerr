@@ -31,7 +31,7 @@ public class SignupController {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if(userFromDB != null){
-            model.put("message", "User already exisits!");
+            model.put("message", "Пользователь с таким ником уже существует!");
             return "signup";
         }
         user.setActive(true);

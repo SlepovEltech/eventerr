@@ -1,14 +1,14 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-    <h1>List of users</h1>
+    <h1>Список пользователей сатй</h1>
     <table border="1">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Password</th>
-                <th>Role</th>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>Роли</th>
                 <th></th>
             </tr>
         </thead>

@@ -1,7 +1,7 @@
 <#import  "parts/common.ftl" as c>
 
 <@c.page>
-<h1>User editor</h1>
+<h1>Редактировать пользователя</h1>
 
     <form action="/user" method="post">
         <div>User ID: ${user.id} </div>

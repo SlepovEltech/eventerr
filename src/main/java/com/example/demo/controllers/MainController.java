@@ -32,13 +32,20 @@ public class MainController {
     }
 
     @GetMapping
-    public String getAll(Map<String, Object> model){
-        Iterable<Event> events = eventRepository.findAll();
+    public String getAll(@RequestParam(required = false) String filter,
+                         Map<String, Object> model){
+        Iterable<Event> events;
+        if(filter != null && !filter.isEmpty()){
+            events = eventRepository.findEventByNameContains(filter);
+        }
+        else{
+            events = eventRepository.findAll();
+        }
         model.put("events", events);
         return "main";
     }
 
-    @PostMapping("/main")
+    @PostMapping
     public String addEvent(@AuthenticationPrincipal User user,
                            @RequestParam String name,
                            @RequestParam String description,

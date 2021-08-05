@@ -3,8 +3,8 @@
 
 <@c.page>
 
-<h1>Add new user</h1>
+<h1>Регистрация нового пользователя</h1>
 ${message!" "}
-<@l.login "/signup" "Sign Up"/>
-<a href="/login">Sign In</a>
+<@l.login "/signup" "Зарегистрироваться"/>
+<a href="/login">Авторизоваться</a>
 </@c.page>
