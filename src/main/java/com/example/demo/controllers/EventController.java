@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -27,11 +28,15 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/my-events")
     public String getEventManager(
             @AuthenticationPrincipal User currentUser,
             Model model
     ){
+        currentUser = userRepository.findUserById(currentUser.getId());
         model.addAttribute("eventManager", currentUser.getEvents());
         model.addAttribute("events", currentUser.getRegistrations());
         return "myEvents";
@@ -42,10 +47,11 @@ public class EventController {
             @PathVariable Event event,
             @AuthenticationPrincipal User user,
             Model model){
-        model.addAttribute("event", event);
-        model.addAttribute("isSubscriber", event.getRegistrations().contains(user));
-        model.addAttribute("isAuthor", event.getAuthor().equals(user));
-        model.addAttribute("users", event.getRegistrations());
+        Event eventFromDB = eventRepository.findEventById(event.getId());
+        model.addAttribute("event", eventFromDB);
+        model.addAttribute("isSubscriber", eventFromDB.getRegistrations().contains(user));
+        model.addAttribute("isAuthor", eventFromDB.getAuthor().equals(user));
+        model.addAttribute("users", eventFromDB.getRegistrations());
         return "event";
     }
 
@@ -86,12 +92,9 @@ public class EventController {
             @PathVariable Event event,
             Model model
     ){
-        System.out.println("Test sub: "+event.getRegistrations().contains(user));
-        event.getRegistrations().add(user);
-        System.out.println("Подписка "+user.getUsername()+" "+event.getName());
-        System.out.println("Test sub: "+event.getRegistrations().contains(user));
-
-        eventRepository.save(event);
+        Event eventFromDb = eventRepository.findEventById(event.getId());
+        eventFromDb.getRegistrations().add(user);
+        eventRepository.save(eventFromDb);
         return "redirect:/event/"+event.getId();
     }
 
@@ -101,14 +104,9 @@ public class EventController {
             @PathVariable Event event,
             Model model
     ){
-        System.out.println("Test unsub: "+event.getRegistrations().contains(user));
-
-        event.getRegistrations().remove(user);
-        System.out.println("Отписка "+user.getUsername()+" "+event.getName());
-
-        System.out.println("Test unsub: "+event.getRegistrations().contains(user));
-
-        eventRepository.save(event);
+        Event eventFromDb = eventRepository.findEventById(event.getId());
+        eventFromDb.getRegistrations().remove(user);
+        eventRepository.save(eventFromDb);
         return "redirect:/event/"+event.getId();
     }
 
