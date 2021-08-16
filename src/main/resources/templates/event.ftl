@@ -12,7 +12,7 @@
         </a>
         <div class="collapse" id="collapseEdit">
             <div class="form-group mt-3">
-                <@ev.eventForm "/event/${event.id}/edit" "Редактировать" "${event.name}" "${event.date}" "${event.description}"/>
+                <@ev.eventForm "/event/${event.id}/edit" "Обновить" "${event.name}" "${event.date}" "${event.description}"/>
             </div>
         </div>
         <a class="btn btn-secondary" data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseExample">

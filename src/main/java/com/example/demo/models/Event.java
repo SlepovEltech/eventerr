@@ -101,7 +101,7 @@ public class Event {
     }
 
     public String getAuthorName(){
-        return (author != null) ? author.getUsername() : "<none>";
+        return (author.getLast_name() != null) ? (author.getFirst_name()+" "+author.getLast_name()) : author.getUsername();
     }
 
     public String getFilename() {
