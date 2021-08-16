@@ -29,11 +29,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Event> events;
 
     @Fetch(FetchMode.JOIN)
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name= "registration",
             joinColumns = {@JoinColumn(name="user_id")},
