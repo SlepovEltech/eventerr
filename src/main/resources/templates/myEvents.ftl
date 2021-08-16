@@ -33,7 +33,7 @@
                     <h6>${event.date}</h6>
                     <p class="card-text">${event.description}</p>
                     <h6>${event.authorName}</h6>
-                    <a href="http://192.168.0.51:8080/event/${event.id}" class="btn btn-secondary">К событию</a>
+                    <a href="/event/${event.id}" class="btn btn-secondary">К событию</a>
                 </div>
             </div>
         <#else>
