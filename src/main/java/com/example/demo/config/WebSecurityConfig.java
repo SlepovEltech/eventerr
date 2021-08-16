@@ -16,13 +16,13 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private  UserService userService;
+    private UserService userService;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/","/signup").permitAll()
+                    .antMatchers("/","/event","/signup", "/img/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

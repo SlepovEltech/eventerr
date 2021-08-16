@@ -21,17 +21,21 @@ import java.util.UUID;
 @Controller
 public class MainController {
 
+    @Autowired
     private EventRepository eventRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    @Autowired
-    public MainController(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
+    @GetMapping
+    public String getAll(){
+        return "redirect:/event";
     }
 
-    @GetMapping
+    @GetMapping("/customlogin")
+    public String getCustomLogin(){ return "redirect:/event"; }
+
+    @GetMapping("/event")
     public String getAll(@RequestParam(required = false) String filter,
                          Map<String, Object> model){
         Iterable<Event> events;
@@ -45,7 +49,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/event")
     public String addEvent(@AuthenticationPrincipal User user,
                            @RequestParam String name,
                            @RequestParam String description,
@@ -65,13 +69,10 @@ public class MainController {
 
             file.transferTo(new File(uploadPath+"/"+resultFileName));
             newEvent.setFilename(resultFileName);
-
         }
         eventRepository.save(newEvent);
-
         Iterable<Event> events = eventRepository.findAll();
         model.put("events", events);
         return "main";
     }
-
 }

@@ -4,7 +4,9 @@
 <@c.page>
 
 <h1>Регистрация нового пользователя</h1>
-${message!" "}
+<div class="alert alert-success" role="alert">
+    ${message!" "}
+</div>
 <@l.login "/signup" "Зарегистрироваться"/>
 <a href="/login">Авторизоваться</a>
 </@c.page>

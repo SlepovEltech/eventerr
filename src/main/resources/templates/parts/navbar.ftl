@@ -18,14 +18,19 @@
                     <a class="nav-link" href="/user">Список пользователей</a>
                 </li>
             </#if>
+            <#if name!="unknown">
+                <li class="nav-item">
+                    <a class="nav-link" href="/my-events">Мои мероприятия</a>
+                </li>
+            </#if>
         </ul>
         <#if name!="unknown">
-            <div class="navbar-text mr-3"> ${name} </div>
+            <a href="/user/account" class="navbar-text mr-3"> ${name} </a>
             <div>
                 <@l.logout />
             </div>
         <#else>
-            <form action="/login">
+            <form action="/customlogin">
                 <input type="submit" class="btn btn-secondary" value="Войти" />
             </form>
         </#if>

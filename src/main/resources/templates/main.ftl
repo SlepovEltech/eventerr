@@ -1,4 +1,6 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/event.ftl" as ev>
+<#include "parts/security.ftl">
 
 <@c.page>
     <h1>Актуальные события</h1>
@@ -10,39 +12,32 @@
             </form>
         </div>
     </div>
-
-    <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        Добавить новое мероприятие
-    </a>
-    <div class="collapse" id="collapseExample">
-        <div class="form-group mt-3">
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="text" name="name" placeholder="Введите название мероприятия"/>
-                <input type="date" name="date" placeholder="Введите дату"/>
-                <input type="text" name="description" placeholder="Введите описание"/>
-                <input type="file" name="file" />
-                <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <button type="submit">Добавить</button>
-            </form>
+    <#if name!="unknown">
+        <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Добавить новое мероприятие
+        </a>
+        <div class="collapse" id="collapseExample">
+            <div class="form-group mt-3">
+                <@ev.eventForm "" "Добавить" "" "" ""/>
+            </div>
         </div>
-    </div>
-        <h1>Ближайшие мероприятия</h1>
-        <table border="1">
+    </#if>
+    <div class="card-columns">
         <#list events as event>
-            <tr>
-                <td>${event.id}</td>
-                <td>${event.name}</td>
-                <td>${event.date}</td>
-                <td>${event.description}</td>
-                <td><strong> ${event.authorName} </strong></td>
-                <td>
-                    <#if event.filename??>
-                        <img src="/img/${event.filename}">
-                    </#if>
-                </td>
-            </tr>
+            <div class="card my-3">
+                <#if event.filename??>
+                    <img class="card-img-top" src="/img/${event.filename}" >
+                </#if>
+                <div class="card-body">
+                    <h5 class="card-title">${event.name}</h5>
+                    <h6>${event.date}</h6>
+                    <p class="card-text">${event.description}</p>
+                    <h6>${event.authorName}</h6>
+                    <a href="event/${event.id}" class="btn btn-secondary">Регистрация</a>
+                </div>
+            </div>
         <#else>
-             Мероприятия не найдены
+            Мероприятия не найдены
         </#list>
-        </table>
+    </div>
 </@c.page>

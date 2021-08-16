@@ -1,4 +1,4 @@
-<#macro login path action>
+<#macro login path btn>
     <form action="${path}" method="post">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Логин:</label>
@@ -14,7 +14,7 @@
         </div>
 
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <button class="btn btn-secondary" type="submit" >${action}</button>
+        <button class="btn btn-secondary" type="submit" >${btn}</button>
     </form>
 </#macro>
 

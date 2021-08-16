@@ -5,6 +5,7 @@ import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,22 +18,21 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String getUserList(Model model){
-
         List<User> userList = userRepository.findAll();
         model.addAttribute("users", userList);
-
         return "userList";
     }
 
     @GetMapping("{user}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
@@ -40,10 +40,12 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userEditSave(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
-            @RequestParam("userId") User user, Model model
+            @RequestParam("userId") User user,
+            Model model
     ){
         user.setUsername(username);
         Set<String> roles = Arrays.stream(Role.values())
@@ -58,5 +60,36 @@ public class UserController {
         }
         userRepository.save(user);
         return "redirect:/user";
+    }
+
+    @GetMapping("account")
+    public String getAccount(
+            @AuthenticationPrincipal User user,
+            Model model
+    ){
+        model.addAttribute("user", user);
+        return "account";
+    }
+
+    @PostMapping("account")
+    public String editAccount(
+            @AuthenticationPrincipal User user,
+            @RequestParam String username,
+            @RequestParam String first_name,
+            @RequestParam String last_name,
+            @RequestParam String password,
+            @RequestParam String email,
+            Model model
+    ){
+        user.setUsername(username);
+        user.setFirst_name(first_name);
+        user.setLast_name(last_name);
+        user.setPassword(password);
+        user.setEmail(email);
+        model.addAttribute("message", "Изменения успешно сохранены");
+        userRepository.save(user);
+
+        System.out.println(user.toString());
+        return "account";
     }
 }
