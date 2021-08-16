@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private Set<Event> events;
 
     @Fetch(FetchMode.JOIN)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name= "registration",
             joinColumns = {@JoinColumn(name="user_id")},

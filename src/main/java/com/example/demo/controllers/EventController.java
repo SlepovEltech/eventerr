@@ -46,7 +46,6 @@ public class EventController {
         model.addAttribute("isSubscriber", event.getRegistrations().contains(user));
         model.addAttribute("isAuthor", event.getAuthor().equals(user));
         model.addAttribute("users", event.getRegistrations());
-
         return "event";
     }
 
