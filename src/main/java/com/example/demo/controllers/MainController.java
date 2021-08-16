@@ -58,21 +58,20 @@ public class MainController {
                            Map<String, Object> model) throws IOException {
 
         Event newEvent = new Event(user, name, date, description);
-//        if(file != null && !file.getOriginalFilename().isEmpty()){
-//            File uploadDir = new File(uploadPath);
-//            if(!uploadDir.exists()){
-//                uploadDir.mkdir();
-//            }
-//            String uuidFile = UUID.randomUUID().toString();
-//            String resultFileName = uuidFile + "_" + file.getOriginalFilename();
-//
-//            file.transferTo(new File(uploadPath+"/"+resultFileName));
-//            newEvent.setFilename(resultFileName);
-//        }
-//        eventRepository.save(newEvent);
-//        Iterable<Event> events = eventRepository.findAll();
-        model.put("path", uploadPath);
-        //model.put("events", events);
+        if(file != null && !file.getOriginalFilename().isEmpty()){
+            File uploadDir = new File(uploadPath);
+            if(!uploadDir.exists()){
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "_" + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath+"/"+resultFileName));
+            newEvent.setFilename(resultFileName);
+        }
+        eventRepository.save(newEvent);
+        Iterable<Event> events = eventRepository.findAll();
+        model.put("events", events);
         return "main";
     }
 }

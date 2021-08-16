@@ -4,7 +4,6 @@
 
 <@c.page>
     <h1>Актуальные события</h1>
-    <h3>${path!"EMPTY"}</h3>
     <div class="form-row">
         <div class="form-group col-md-6">
             <form method="get" action="" class="form-inline">
