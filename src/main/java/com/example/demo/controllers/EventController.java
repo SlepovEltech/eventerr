@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,26 +89,32 @@ public class EventController {
     }
 
     @GetMapping("/event/{event}/subscribe")
+    //@Transactional(propagation=Propagation.REQUIRES_NEW)
     public String subscribe(
             @AuthenticationPrincipal User user,
             @PathVariable Event event,
             Model model
     ){
-        Event eventFromDb = eventRepository.findEventById(event.getId());
-        eventFromDb.getRegistrations().add(user);
-        eventRepository.save(eventFromDb);
+        //Event eventFromDb = eventRepository.findEventById(event.getId());
+        //event.getRegistrations().add(user);
+        //eventRepository.save(event);
+        user.getRegistrations().add(event);
+        userRepository.save(user);
         return "redirect:/event/"+event.getId();
     }
 
     @GetMapping("/event/{event}/unsubscribe")
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
     public String unsubscribe(
             @AuthenticationPrincipal User user,
             @PathVariable Event event,
             Model model
     ){
-        Event eventFromDb = eventRepository.findEventById(event.getId());
-        eventFromDb.getRegistrations().remove(user);
-        eventRepository.save(eventFromDb);
+        //Event eventFromDb = eventRepository.findEventById(event.getId());
+        //event.getRegistrations().remove(user);
+        //eventRepository.save(event);
+        user.getRegistrations().remove(event);
+        userRepository.save(user);
         return "redirect:/event/"+event.getId();
     }
 
