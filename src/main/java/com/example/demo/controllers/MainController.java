@@ -15,8 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -70,7 +69,8 @@ public class MainController {
             newEvent.setFilename(resultFileName);
         }
         eventRepository.save(newEvent);
-        Iterable<Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
+        Collections.sort(events, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         model.put("events", events);
         return "main";
     }

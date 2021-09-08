@@ -37,6 +37,8 @@ public class SignupController {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
-        return "redirect:/login";
+        model.put("message", "Пользователь <b>"+user.getUsername()+"</b> успешно  зарегистрирован!");
+        //return "redirect:/login";
+        return "signup";
     }
 }
