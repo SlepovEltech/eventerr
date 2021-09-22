@@ -64,25 +64,27 @@ public class EventController {
             @RequestParam String name,
             @RequestParam String description,
             @RequestParam Date date,
-            @RequestParam("file") MultipartFile file,
+            //@RequestParam("file") MultipartFile file,
+            @RequestParam String file,
             Model model
     ) throws IOException {
         if(user.equals(event.getAuthor()))
         {
-            if(file != null && !file.getOriginalFilename().isEmpty()){
-                File uploadDir = new File(uploadPath);
-                if(!uploadDir.exists()){
-                    uploadDir.mkdir();
-                }
-                String uuidFile = UUID.randomUUID().toString();
-                String resultFileName = uuidFile + "_" + file.getOriginalFilename();
-
-                file.transferTo(new File(uploadPath+"/"+resultFileName));
-                event.setFilename(resultFileName);
-            }
+//            if(file != null && !file.getOriginalFilename().isEmpty()){
+//                File uploadDir = new File(uploadPath);
+//                if(!uploadDir.exists()){
+//                    uploadDir.mkdir();
+//                }
+//                String uuidFile = UUID.randomUUID().toString();
+//                String resultFileName = uuidFile + "_" + file.getOriginalFilename();
+//
+//                file.transferTo(new File(uploadPath+"/"+resultFileName));
+//                event.setFilename(resultFileName);
+//            }
             event.setDate(date);
             event.setDescription(description);
             event.setName(name);
+            event.setFilename(file);
             eventRepository.save(event);
         }
         return "redirect:/event/"+event.getId();

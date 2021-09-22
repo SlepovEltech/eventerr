@@ -40,11 +40,12 @@ public class Event {
 
     }
 
-    public Event(User author, String name, Date date, String description) {
+    public Event(User author, String name, Date date, String description, String filename) {
         this.author = author;
         this.name = name;
         this.date = date;
         this.description = description;
+        this.filename = filename;
     }
 
     @Override

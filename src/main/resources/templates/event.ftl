@@ -65,7 +65,8 @@
     }
 
     .page-bg {
-        background: url("/img/${event.filename}") no-repeat;
+        background: url("${event.filename}") no-repeat;
+        //background: url("https://sun9-44.userapi.com/impg/icn_tRdt1ZpTJNO-xBgP5keGcHIRRanPl_Gi1Q/F2iP6QpkIik.jpg?size=1024x683&quality=95&sign=4720bebf4ceb3a09e96f4faaf9de53b6&type=album") no-repeat;
         background-size: cover;
         -webkit-filter: blur(5px);
         /*-moz-filter: blur(5px);*/

@@ -53,21 +53,22 @@ public class MainController {
                            @RequestParam String name,
                            @RequestParam String description,
                            @RequestParam Date date,
-                           @RequestParam("file") MultipartFile file,
+                           @RequestParam String file,
+                           //@RequestParam("file") MultipartFile file,
                            Map<String, Object> model) throws IOException {
 
-        Event newEvent = new Event(user, name, date, description);
-        if(file != null && !file.getOriginalFilename().isEmpty()){
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "_" + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath+"/"+resultFileName));
-            newEvent.setFilename(resultFileName);
-        }
+        Event newEvent = new Event(user, name, date, description, file);
+//        if(file != null && !file.getOriginalFilename().isEmpty()){
+//            File uploadDir = new File(uploadPath);
+//            if(!uploadDir.exists()){
+//                uploadDir.mkdir();
+//            }
+//            String uuidFile = UUID.randomUUID().toString();
+//            String resultFileName = uuidFile + "_" + file.getOriginalFilename();
+//
+//            file.transferTo(new File(uploadPath+"/"+resultFileName));
+//            newEvent.setFilename(resultFileName);
+//        }
         eventRepository.save(newEvent);
         List<Event> events = eventRepository.findAll();
         Collections.sort(events, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
