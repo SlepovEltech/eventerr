@@ -6,7 +6,7 @@
         <#list events as event>
             <div class="card my-3">
                 <#if event.filename??>
-                    <img class="card-img-top" src="/img/${event.filename}" >
+                    <img class="card-img-top" src="${event.filename}" >
                 </#if>
                 <div class="card-body">
                     <h5 class="card-title">${event.name}</h5>
@@ -26,7 +26,7 @@
         <#list eventManager as event>
             <div class="card my-3">
                 <#if event.filename??>
-                    <img class="card-img-top" src="/img/${event.filename}" >
+                    <img class="card-img-top" src="${event.filename}" >
                 </#if>
                 <div class="card-body">
                     <h5 class="card-title">${event.name}</h5>
