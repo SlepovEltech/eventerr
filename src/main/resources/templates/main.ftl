@@ -40,7 +40,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Фото:</label>
                         <div class="col-sm-6">
-                            <input type="file" name="file" class="form-control" />
+                            <input type="text" name="file" class="form-control" />
                         </div>
                     </div>
                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
