@@ -154,4 +154,14 @@ public class EventController {
         }
     }
 
+    @GetMapping("/event/{event}/{guest}/submit")
+    public String getUserRegisSubmit(
+            @PathVariable Event event,
+            @PathVariable User guest,
+            @AuthenticationPrincipal User user,
+            Model model){
+        Event eventFromDB = eventRepository.findEventById(event.getId());
+        return "redirect:/event/" + eventFromDB.getId();
+    }
+
 }
