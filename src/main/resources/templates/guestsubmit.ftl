@@ -3,7 +3,7 @@
 
 <@c.page>
     <h1>Подтверждение регистрации на ${event.name}</h1>
-    <h2>${user.first_name!""} ${user.last_name!""}</h2>
+    <h2>${guest.first_name!""} ${guest.last_name!""}</h2>
     <a href="/event/${event.id}/${guest.id}/submit" class="btn btn-secondary">Подтвердить присутствие</a>
     <div class="page-bg"></div>
 </@c.page>

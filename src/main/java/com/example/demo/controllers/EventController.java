@@ -150,7 +150,7 @@ public class EventController {
             return "guestsubmit";
         }
         else {
-            return "redirect:/event" + eventFromDB.getId();
+            return "redirect:/event/" + eventFromDB.getId();
         }
     }
 
