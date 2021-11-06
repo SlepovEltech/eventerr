@@ -53,6 +53,7 @@ public class EventController {
         model.addAttribute("event", eventFromDB);
         model.addAttribute("isSubscriber", eventFromDB.getRegistrations().contains(user));
         model.addAttribute("isAuthor", eventFromDB.getAuthor().equals(user));
+        model.addAttribute("guestID", user.getId());
         model.addAttribute("users", eventFromDB.getRegistrations());
         return "event";
     }
@@ -66,6 +67,7 @@ public class EventController {
             @RequestParam Date date,
             //@RequestParam("file") MultipartFile file,
             @RequestParam String file,
+            @RequestParam String maptag,
             Model model
     ) throws IOException {
         if(user.equals(event.getAuthor()))
@@ -85,6 +87,7 @@ public class EventController {
             event.setDescription(description);
             event.setName(name);
             event.setFilename(file);
+            event.setMaptag(maptag);
             eventRepository.save(event);
         }
         return "redirect:/event/"+event.getId();
@@ -118,6 +121,37 @@ public class EventController {
         user.getRegistrations().remove(event);
         userRepository.save(user);
         return "redirect:/event/"+event.getId();
+    }
+
+    @GetMapping("/event/{event}/delete")
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    public String delete(
+            @AuthenticationPrincipal User user,
+            @PathVariable Event event,
+            Model model
+    ){
+        eventRepository.delete(event);
+        //user.getRegistrations().remove(event);
+        //userRepository.save(user);
+        return "redirect:/event";
+    }
+
+    @GetMapping("/event/{event}/{guest}")
+    public String getUserRegistration(
+            @PathVariable Event event,
+            @PathVariable User guest,
+            @AuthenticationPrincipal User user,
+            Model model){
+        Event eventFromDB = eventRepository.findEventById(event.getId());
+
+        if(eventFromDB.getAuthor().equals(user)){
+            model.addAttribute("guest", guest);
+            model.addAttribute("event", event);
+            return "guestsubmit";
+        }
+        else {
+            return "redirect:/event" + eventFromDB.getId();
+        }
     }
 
 }

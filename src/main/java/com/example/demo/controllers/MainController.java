@@ -54,10 +54,11 @@ public class MainController {
                            @RequestParam String description,
                            @RequestParam Date date,
                            @RequestParam String file,
+                           @RequestParam String maptag,
                            //@RequestParam("file") MultipartFile file,
                            Map<String, Object> model) throws IOException {
 
-        Event newEvent = new Event(user, name, date, description, file);
+        Event newEvent = new Event(user, name, date, description, file, maptag);
 //        if(file != null && !file.getOriginalFilename().isEmpty()){
 //            File uploadDir = new File(uploadPath);
 //            if(!uploadDir.exists()){

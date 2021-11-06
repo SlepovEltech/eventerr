@@ -27,6 +27,9 @@ public class Event {
 
     private String filename;
 
+    @Column(columnDefinition="TEXT")
+    private String maptag;
+
     @Fetch(FetchMode.JOIN)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -40,12 +43,14 @@ public class Event {
 
     }
 
-    public Event(User author, String name, Date date, String description, String filename) {
+    public Event(User author, String name, Date date, String description, String filename, String maptag) {
         this.author = author;
         this.name = name;
         this.date = date;
         this.description = description;
         this.filename = filename;
+        this.maptag = maptag;
+
     }
 
     @Override
@@ -119,5 +124,13 @@ public class Event {
 
     public void setRegistrations(Set<User> registrations) {
         this.registrations = registrations;
+    }
+
+    public String getMaptag() {
+        return maptag;
+    }
+
+    public void setMaptag(String maptag) {
+        this.maptag = maptag;
     }
 }

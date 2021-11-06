@@ -1,4 +1,4 @@
-<#macro eventForm path btn name date description>
+<#macro eventForm path btn name date description filename maptag>
     <form action=${path} method="post" enctype="multipart/form-data" >
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Название:</label>
@@ -20,11 +20,14 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Фото:</label>
-<#--            <div class="col-sm-6">-->
-<#--                <input type="file" name="file" class="form-control" />-->
-<#--            </div>-->
             <div class="col-sm-6">
-                <input type="text" name="file" class="form-control" />
+                <input type="text" name="file" class="form-control" placeholder="Введите описание"  value="${filename}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ссылка на карты:</label>
+            <div class="col-sm-6">
+                <input type="text" name="maptag" class="form-control" placeholder="Введите тег карты"  value="${maptag}"/>
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />

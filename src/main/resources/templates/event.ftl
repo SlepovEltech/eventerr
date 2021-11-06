@@ -3,7 +3,7 @@
 <#include "parts/security.ftl">
 
 <@c.page>
-    <h1 style="color: white" >${event.name}</h1>
+    <h1>${event.name}</h1>
     <h5>${event.date}</h5>
     <p class="">${event.description}</p>
     <#if isAuthor>
@@ -12,9 +12,21 @@
         </a>
         <div class="collapse" id="collapseEdit">
             <div class="form-group mt-3">
-                <@ev.eventForm "/event/${event.id}/edit" "Обновить" "${event.name}" "${event.date}" "${event.description}"/>
+                <@ev.eventForm "/event/${event.id}/edit" "Обновить" "${event.name}"
+                "${event.date}" "${event.description}"
+                "${event.filename}" "" />
+<#--            <#if event.maptag?has_content>-->
+<#--                <@ev.eventForm "/event/${event.id}/edit" "Обновить" "${event.name}"-->
+<#--                "${event.date}" "${event.description}"-->
+<#--                "${event.filename}" "${event.maptag}" />-->
+<#--            <#else>-->
+<#--                <@ev.eventForm "/event/${event.id}/edit" "Обновить" "${event.name}"-->
+<#--                "${event.date}" "${event.description}"-->
+<#--                "${event.filename}" "" />-->
+<#--            </#if>-->
             </div>
         </div>
+        <a href="/event/${event.id}/delete" class="btn btn-secondary">Удалить</a>
         <a class="btn btn-secondary" data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseExample">
             Показать список гостей
         </a>
@@ -42,13 +54,26 @@
     <#else>
         <#if isSubscriber>
             <h4>Вы успешно зарегистрированы</h4>
+            <div>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://eventerr.herokuapp.com/event/${event.id}/${guestID}">
+            </div>
             <a href="/event/${event.id}/unsubscribe" class="btn btn-secondary">Отписаться</a>
         <#else>
             <a href="/event/${event.id}/subscribe" class="btn btn-secondary">Зарегистрироваться</a>
         </#if>
     </#if>
-    <div class="page-bg">
+    <#if event.maptag?has_content>
+    <a class="btn btn-secondary" data-toggle="collapse" href="#collapseMap" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Показать карту
+    </a>
+    <div class="collapse" id="collapseMap">
+        <div class="form-group mt-3">
+            ${event.maptag}
+        </div>
     </div>
+    </#if>
+
+    <div class="page-bg"></div>
 
 </@c.page>
 
@@ -56,17 +81,15 @@
 
     body {
         font-family: "Arial";
-        color: #fff;
-    }
-
-    .my-color {
-        font-family: "Arial";
-        color: #000;
+        <#if event.filename?has_content>
+            color: #fff;
+        <#else>
+            color: #000;
+        </#if>
     }
 
     .page-bg {
         background: url("${event.filename}") no-repeat;
-        //background: url("https://sun9-44.userapi.com/impg/icn_tRdt1ZpTJNO-xBgP5keGcHIRRanPl_Gi1Q/F2iP6QpkIik.jpg?size=1024x683&quality=95&sign=4720bebf4ceb3a09e96f4faaf9de53b6&type=album") no-repeat;
         background-size: cover;
         -webkit-filter: blur(5px);
         /*-moz-filter: blur(5px);*/
