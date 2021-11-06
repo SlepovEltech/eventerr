@@ -54,7 +54,7 @@
     <#else>
         <#if isSubscriber>
             <h4>Вы успешно зарегистрированы</h4>
-            <div>
+            <div style="margin-bottom: 15px">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://eventerr.herokuapp.com/event/${event.id}/${guestID}">
             </div>
             <a href="/event/${event.id}/unsubscribe" class="btn btn-secondary">Отписаться</a>
